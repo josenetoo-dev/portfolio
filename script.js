@@ -42,7 +42,7 @@ const dialogImage = document.querySelector(".dialog-image");
 document.querySelectorAll("[data-certificate]").forEach((button) => {
   button.addEventListener("click", () => {
     dialogImage.src = button.dataset.certificate;
-    dialogImage.alt = button.querySelector("img").alt;
+    dialogImage.alt = button.closest(".certificate").querySelector("img").alt;
     dialog.showModal();
   });
 });

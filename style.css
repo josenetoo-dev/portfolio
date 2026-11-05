@@ -142,6 +142,10 @@ h3 { margin: 0; font-size: 19px; line-height: 1.35; letter-spacing: -.01em; }
 
 .footer { min-height: 84px; display: flex; justify-content: space-between; align-items: center; gap: 16px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
 
+.mobile-only { display: none; }
+.cert-links { display: flex; flex-wrap: wrap; gap: 0 24px; }
+.view-cert { background: none; border: 0; padding: 0; cursor: pointer; }
+
 /* Entrada ao rolar (só quando o JS está ativo) */
 .js .reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; transition-delay: calc(var(--i, 0) * 90ms); }
 .js .reveal.visible { opacity: 1; transform: none; }
@@ -154,30 +158,60 @@ h3 { margin: 0; font-size: 19px; line-height: 1.35; letter-spacing: -.01em; }
 }
 
 @media (max-width: 700px) {
-  :root { --header: 60px; }
+  :root { --header: 56px; }
   .menu-toggle { display: flex; }
-  .status { display: none; }
-  .nav { display: none; position: absolute; top: var(--header); left: 0; right: 0; margin: 0; padding: 8px 20px 16px; flex-direction: column; gap: 0; background: #0d1115; border-bottom: 1px solid var(--line); }
+  .status, .hide-mobile, .certificate-preview { display: none; }
+  .mobile-only { display: inline-flex; }
+  .nav { display: none; position: absolute; top: var(--header); left: 0; right: 0; margin: 0; padding: 4px 20px 12px; flex-direction: column; gap: 0; background: #0d1115; border-bottom: 1px solid var(--line); }
   .nav.open { display: flex; }
-  .nav a { padding: 14px 0; font-size: 16px; border-bottom: 1px solid var(--line); }
+  .nav a { padding: 13px 0; font-size: 16px; border-bottom: 1px solid var(--line); }
   .nav a:last-child { border-bottom: 0; }
-  .hero { padding: 40px 0 48px; gap: 36px; }
-  .hero-text { font-size: 16px; margin: 20px 0 28px; }
+
+  .hero { padding: 28px 0 36px; gap: 24px; }
+  .hero-role { margin-bottom: 12px; }
+  .hero-text { font-size: 16px; margin: 16px 0 22px; }
   .hero-actions .button { flex: 1 1 140px; }
-  .block { padding: 64px 0; }
-  h2 { margin-bottom: 28px; }
+  .now li { padding: 13px 16px; }
+  .now small { font-size: 13px; }
+
+  .block { padding: 40px 0; }
+  h2 { font-size: 28px; margin-bottom: 20px; }
+  h3 { font-size: 17px; }
+  #sobre { gap: 16px; }
   #sobre h2 { margin-bottom: 0; }
-  .card { padding: 20px; }
-  .certificate { padding: 0; }
-  .certificate-grid { grid-template-columns: 1fr; margin-bottom: 40px; }
-  .certificate-details { padding: 20px 20px 10px; }
-  .stack-row { grid-template-columns: 1fr; gap: 10px; }
-  .stack-category { padding-top: 0; }
-  .school-record { grid-template-columns: 1fr; gap: 8px; margin-bottom: 40px; }
-  .contact { padding-bottom: 56px; }
-  .contact-panel { padding: 32px 22px; }
-  .contact-actions .button { flex: 1 1 100%; }
-  .footer { padding: 20px 0; }
+  .prose p { margin-bottom: 12px; font-size: 15px; }
+
+  .card { padding: 16px; }
+  .project p { margin-top: 8px; font-size: 14px; }
+  .tags { margin: 12px 0 4px; gap: 6px; }
+  .tags li { padding: 4px 8px; font-size: 11px; }
+  .text-link, .card-link { min-height: 40px; font-size: 14px; }
+
+  .stack-list { border-top: 0; }
+  .stack-row { grid-template-columns: 1fr; gap: 6px; padding: 10px 0; border-bottom: 0; }
+  .stack-category { padding-top: 0; font-size: 13px; }
+  .chips { gap: 6px; }
+  .chips li { padding: 5px 10px; font-size: 13px; }
+
+  .school-record { grid-template-columns: 1fr; gap: 4px; padding: 16px 0; margin-bottom: 28px; }
+  .school-record p { font-size: 14px; }
+  .subhead { font-size: 18px; }
+  .section-note { margin-bottom: 14px; font-size: 13px; }
+  .certificate-grid { grid-template-columns: 1fr; gap: 12px; margin-bottom: 28px; }
+  .certificate-details { padding: 16px 16px 6px; }
+  .facts { gap: 28px; margin: 12px 0 6px; padding: 10px 0; }
+  .course .meta { margin-top: 6px; }
+  .mentors { margin-top: 28px; font-size: 13px; }
+
+  .contact { padding-bottom: 36px; }
+  .contact-panel { padding: 24px 18px; }
+  .contact-panel h2 { margin-bottom: 8px; }
+  .contact-panel p { margin-bottom: 18px; font-size: 15px; }
+  .contact-actions { gap: 10px; }
+  .contact-actions .button:first-child { flex: 1 1 100%; }
+  .contact-actions .button { flex: 1 1 calc(50% - 5px); }
+  .contact-panel .contact-mail { margin-top: 14px; font-size: 13px; }
+  .footer { min-height: 64px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
