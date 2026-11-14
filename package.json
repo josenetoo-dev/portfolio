@@ -1,0 +1,8 @@
+{
+  "name": "jose-neto-portfolio",
+  "private": true,
+  "version": "2.0.0",
+  "description": "Portfólio estático; dependências usadas apenas na validação.",
+  "scripts": { "test": "node tests/browser.cjs", "check": "node --check script.js && python3 tests/static.py" },
+  "devDependencies": { "axe-core": "4.11.1", "playwright": "1.58.2" }
+}
