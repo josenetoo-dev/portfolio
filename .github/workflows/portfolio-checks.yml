@@ -1,8 +1,6 @@
 name: Portfolio checks
 on:
   pull_request:
-  push:
-    branches: [feat/premium-portfolio]
 permissions:
   contents: read
 jobs:

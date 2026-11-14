@@ -93,14 +93,28 @@ const server = http.createServer((req, res) => {
           // Scroll lazy images into view before validating/saving the full page.
           for (const image of await page.locator("main img").all()) {
             await image.scrollIntoViewIfNeeded();
-            await image.evaluate((img) => img.decode());
+            const source = await image.getAttribute("src");
+            await page.waitForFunction((src) => {
+              const img = [...document.querySelectorAll("main img")].find(
+                (el) => el.getAttribute("src") === src,
+              );
+              return img && img.complete && img.naturalWidth > 0;
+            }, source);
           }
-          await page.evaluate(() => window.scrollTo(0, 0));
+          await page.evaluate(() =>
+            window.scrollTo({ top: 0, behavior: "instant" }),
+          );
           await page.screenshot({
             path: path.join(out, `${name}-${width}.png`),
             fullPage: true,
             animations: "disabled",
           });
+          if (name === "chromium" && [390, 1440].includes(width)) {
+            await page.screenshot({
+              path: path.join(out, `${name}-${width}-viewport.png`),
+              animations: "disabled",
+            });
+          }
           await page.addScriptTag({
             path: require.resolve("axe-core/axe.min.js"),
           });
@@ -128,6 +142,10 @@ const server = http.createServer((req, res) => {
             `${name}/${width}: accessibility`,
           );
           summary.push(`${name} ${width}px: layout, images, axe PASS`);
+          fs.writeFileSync(
+            path.join(out, "summary.txt"),
+            summary.join("\n") + "\n",
+          );
         }
         await page.setViewportSize({ width: 390, height: 844 });
         await page.goto(url);
@@ -148,7 +166,10 @@ const server = http.createServer((req, res) => {
           await page.locator("dialog").evaluate((el) => el.open),
           true,
         );
-        await page.locator(".dialog-image").evaluate((img) => img.decode());
+        await page.waitForFunction(() => {
+          const img = document.querySelector(".dialog-image");
+          return img.complete && img.naturalWidth > 0;
+        });
         await page
           .getByRole("button", { name: "Fechar certificado" })
           .press("Escape");
